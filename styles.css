@@ -1,41 +1,81 @@
 .mini-screen-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 10px;
   background-color: #f1f1f1;
   border-bottom: 1px solid #ccc;
+  text-align: center;
 }
 
-/* ID를 사용한 CSS 적용 */
 
 #url-input {
   flex-grow: 1;
-  margin-right: 10px;
-  padding: 5px;
-}
-
-#go-button,
-#close-button {
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-#go-button {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
   margin-right: 10px;
 }
 
-#close-button {
-  background-color: #f44336;
+button.button-with-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: #4caf50;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
 }
 
-#close-button:hover {
-  background-color: #77110a;
+button.button-with-icon svg {
+  width: 20px;
+  height: 20px;
+  margin-right: 6px;
+}
+
+.button-with-icon:hover {
+  background-color: #0c4d0e;
+}
+
+#close-button.button-with-icon {
+  background-color: #f44336;
+}
+
+#close-button.button-with-icon:hover {
+  background-color: #da190b;
 }
 
 #mini-iframe {
   flex-grow: 1;
   border: none;
+}
+
+.bookmark-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.bookmark-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.bookmark-list li:hover {
+  background-color: #f1f1f1;
+}
+
+.bookmark-list li button {
+  margin-left: 10px;
+  font-size: 12px;
+  padding: 4px 8px;
 }

@@ -8,12 +8,9 @@
     "scripting",
     "storage",
     "tabs",
-    "declarativeNetRequest",
-    "<all_urls>"
+    "declarativeNetRequest"
   ],
-  "host_permissions": [
-    "<all_urls>"
-  ],
+  "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
   },

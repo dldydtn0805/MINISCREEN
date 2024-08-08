@@ -1,5 +1,3 @@
-init();
-
 function init() {
   // MINISCREEN이 꺼진 상태만 동작한다
   if (document.getElementById("miniscreen")) {
@@ -25,13 +23,21 @@ function init() {
 
   // 직접 HTML을 넣는다
   miniScreen.innerHTML = `
-      <div class="mini-screen-header">
-        <input type="text" id="url-input" placeholder="ARCA LIVE">
-        <button id="go-button">Go</button>
-        <button id="close-button">Close</button>
-      </div>
-      <iframe id="mini-iframe"></iframe>
-    `;
+  <div class="mini-screen-header">
+    <input type="text" id="url-input" placeholder="SEARCH WORD OR URL">
+    <button id="go-button" class="button-with-icon">
+      >
+    </button>
+    <button id="add-bookmark-button" class="button-with-icon">
+      +
+    </button>
+    <button id="close-button" class="button-with-icon">
+      X
+    </button>
+  </div>
+  <iframe id="mini-iframe"></iframe>
+  <ul class="bookmark-list"></ul>
+`;
 
   // URL 입력 및 이동 기능을 JS로 가져온다
   const urlInput = miniScreen.querySelector("#url-input");
@@ -39,8 +45,15 @@ function init() {
   const closeButton = miniScreen.querySelector("#close-button");
   const iframe = miniScreen.querySelector("#mini-iframe");
   const header = miniScreen.querySelector(".mini-screen-header");
+  const bookmarkList = miniScreen.querySelector(".bookmark-list");
+  const addBookmarkButton = miniScreen.querySelector("#add-bookmark-button");
 
-  // 드래그 기능
+  addBookmarkButton.addEventListener("click", () => {
+    const currentUrl = iframe.src;
+    addBookmark(currentUrl);
+  });
+
+  // 미니 스크린 헤더를 드래그해서 이동할 수 있다
   header.addEventListener("mousedown", (event) => {
     const offsetX = event.clientX - miniScreen.getBoundingClientRect().left;
     const offsetY = event.clientY - miniScreen.getBoundingClientRect().top;
@@ -57,18 +70,20 @@ function init() {
   });
 
   // 기본 URL을 설정한다
-  const defaultURL = "https://arca.live";
+  const defaultURL = "https://youtube.com";
   iframe.src = defaultURL;
 
   // GO 버튼은 페이지를 이동시킨다
   let targetUrl;
   goButton.addEventListener("click", () => {
-    // 주소가 아니라면 나무위키로 검색한다
+    // 검색어가 없다면 defaultURL로 이동한다
     if (!urlInput.value) {
       targetUrl = defaultURL;
+      // 주소 검색 아니라면 나무위키 키워드 검색을 한다
     } else if (!urlInput.value.includes(".")) {
       const queryParams = encodeURIComponent(urlInput.value);
       targetUrl = `https://namu.wiki/w/${queryParams}`;
+      // https:// 를 붙이지 않았더라도 정상적인 주소 이동을 하게 한다
     } else {
       targetUrl =
         urlInput.value.startsWith("http://") ||
@@ -76,6 +91,7 @@ function init() {
           ? urlInput.value
           : "https://" + urlInput.value;
     }
+    // 입력창을 다시 비운다
     urlInput.value = "";
     iframe.src = targetUrl;
   });
@@ -93,5 +109,54 @@ function init() {
     miniScreen.remove();
   });
 
+  // 북마크 데이터 저장
+  function saveBookmarks() {
+    const bookmarks = [...bookmarkList.children].map((item) => {
+      const url = item.dataset.url;
+      return url;
+    });
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  }
+
+  // 북마크 데이터 로드
+  function loadBookmarks() {
+    const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+    bookmarks.forEach((url) => addBookmark(url));
+  }
+
+  // 북마크 추가
+  function addBookmark(url) {
+    const listItem = document.createElement("li");
+    listItem.dataset.url = url;
+    listItem.textContent = url;
+    listItem.addEventListener("click", () => {
+      iframe.src = url;
+    });
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "X";
+    deleteButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      removeBookmark(url);
+    });
+    listItem.appendChild(deleteButton);
+    bookmarkList.appendChild(listItem);
+    saveBookmarks();
+  }
+
+  // 북마크 삭제
+  function removeBookmark(url) {
+    const items = [...bookmarkList.children];
+    const item = items.find((item) => item.dataset.url === url);
+    if (item) {
+      bookmarkList.removeChild(item);
+      saveBookmarks();
+    }
+  }
+
+  // 미니 스크린 생성 시 북마크 데이터 로드
+  loadBookmarks();
+
   document.body.appendChild(miniScreen);
 }
+
+init();
