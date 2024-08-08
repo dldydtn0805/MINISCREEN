@@ -1,6 +1,7 @@
 # MINISCREEN
 
 ![image](https://github.com/user-attachments/assets/c8b0f21b-3007-447e-a0d8-c9742beb7671)
+![image](https://github.com/user-attachments/assets/fd205990-f393-4d84-a53f-cfb2cf3dbaef)
 
 - 크롬 확장 프로그램입니다.
 - 유튜브 등의 영상을 보면서 작은 보조 화면을 띄울 수 있습니다.
