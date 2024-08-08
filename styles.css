@@ -31,6 +31,10 @@
   border-radius: 5px;
 }
 
+#close-button:hover {
+  background-color: #77110a;
+}
+
 #mini-iframe {
   flex-grow: 1;
   border: none;
