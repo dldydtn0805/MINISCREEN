@@ -1,4 +1,4 @@
-// declarativeNetRequest 규칙 설정
+// V3에서 X-FRAME-OPTIONS를 우회하기 위해 declarativeNetRequest를 사용한다
 chrome.declarativeNetRequest.updateDynamicRules({
     removeRuleIds: [1],
     addRules: [{

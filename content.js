@@ -60,13 +60,12 @@ function init() {
     iframe.src = "https://arca.live";
     
     // GO 버튼은 페이지를 이동시킨다
-    
     let targetUrl;
     goButton.addEventListener('click', () => {
-      // 주소가 아니라면 아카라이브로 검색한다
+      // 주소가 아니라면 나무위키로 검색한다
       if (!urlInput.value.includes('.')) {
         const queryParams = encodeURIComponent(urlInput.value)
-        targetUrl = `https://arca.live/b/breaking?keyword=${queryParams}`
+        targetUrl = `https://namu.wiki/w/${queryParams}`
       } else {
         targetUrl = urlInput.value.startsWith('http://') || urlInput.value.startsWith('https://')
         ? urlInput.value
