@@ -92,4 +92,3 @@ function init() {
   
     document.body.appendChild(miniScreen);
 }
-

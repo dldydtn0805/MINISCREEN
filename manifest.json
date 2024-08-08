@@ -1,29 +1,30 @@
 {
-    "manifest_version": 3,
-    "name": "MINISCREEN",
-    "version": "1.0",
-    "description": "크롬 화면 위에 보조 모바일 화면을 띄울 수 있다",
-    "permissions": [
-      "activeTab",
-      "scripting",
-      "storage",
-      "tabs",
-      "webRequest",
-      "webRequestBlocking",
-      "<all_urls>"
-    ],
-    "background": {
-      "service_worker": "background.js"
-    },
-    "content_scripts": [
-      {
-        "matches": ["<all_urls>"],
-        "js": ["content.js"],
-        "css": ["styles.css"]
-      }
-    ],
-    "action": {
-      "default_title": "MINISCREEN"
+  "manifest_version": 3,
+  "name": "MINISCREEN",
+  "version": "1.0",
+  "description": "크롬 화면 위에 보조 모바일 화면을 띄울 수 있다",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "tabs",
+    "declarativeNetRequest",
+    "<all_urls>"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
     }
+  ],
+  "action": {
+    "default_title": "MINISCREEN"
+  }
 }
-  
