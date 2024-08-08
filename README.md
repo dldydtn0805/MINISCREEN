@@ -1,6 +1,6 @@
 # MINISCREEN
 
-![image](https://github.com/user-attachments/assets/a96a4cf3-5389-4758-a475-a7d9e9eba6c4)
+![image](https://github.com/user-attachments/assets/965553d9-3bd9-4b81-b0f5-795d7339cac3)
 ![image](https://github.com/user-attachments/assets/fd205990-f393-4d84-a53f-cfb2cf3dbaef)
 
 - 크롬 확장 프로그램입니다.
