@@ -23,24 +23,24 @@ function init() {
 
   // 직접 HTML을 넣는다
   miniScreen.innerHTML = `
-  <div class="mini-screen-header">
-    <input type="text" id="url-input" placeholder="SEARCH WORD OR URL">
-    <button id="go-button" class="button-with-icon">
-      >
-    </button>
-    <button id="add-bookmark-button" class="button-with-icon">
-      +
-    </button>
-    <button id="toggle-bookmark-button" class="button-with-icon">
-      ★
-    </button>
-    <button id="close-button" class="button-with-icon">
-      X
-    </button>
-  </div>
-  <ul class="bookmark-list" style="display: none;"></ul>
-  <iframe id="mini-iframe"></iframe>
-`;
+   <div class="mini-screen-header">
+     <input type="text" id="url-input" placeholder="SEARCH WORD OR URL">
+     <button id="go-button" class="button-with-icon">
+       >
+     </button>
+     <button id="add-bookmark-button" class="button-with-icon">
+       +
+     </button>
+     <button id="toggle-bookmark-button" class="button-with-icon">
+       ★
+     </button>
+     <button id="close-button" class="button-with-icon">
+       X
+     </button>
+   </div>
+   <ul class="bookmark-list" style="display: none;"></ul>
+   <iframe id="mini-iframe"></iframe>
+ `;
 
   // URL 입력 및 이동 기능을 JS로 가져온다
   const urlInput = miniScreen.querySelector("#url-input");
@@ -85,10 +85,10 @@ function init() {
     // 검색어가 없다면 defaultURL로 이동한다
     if (!urlInput.value) {
       targetUrl = defaultURL;
-      // 주소 검색 아니라면 사전 키워드 검색을 한다
+      // 주소 검색 아니라면 나무위키 키워드 검색을 한다
     } else if (!urlInput.value.includes(".")) {
       const queryParams = encodeURIComponent(urlInput.value);
-      targetUrl = `https://www.google.com/search?q=${queryParams}`;
+      targetUrl = `https://namu.wiki/w/${queryParams}`;
       // https:// 를 붙이지 않았더라도 정상적인 주소 이동을 하게 한다
     } else {
       targetUrl =
@@ -132,11 +132,6 @@ function init() {
 
   // 북마크 추가
   function addBookmark(url) {
-    // 중복 체크
-    if ([...bookmarkList.children].some((item) => item.dataset.url === url)) {
-      return;
-    }
-
     const listItem = document.createElement("li");
     listItem.dataset.url = url;
     listItem.textContent = url;
