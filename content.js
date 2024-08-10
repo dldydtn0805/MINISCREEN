@@ -24,19 +24,12 @@ function init() {
   // 직접 HTML을 넣는다
   miniScreen.innerHTML = `
    <div class="mini-screen-header">
+     
      <input type="text" id="url-input" placeholder="SEARCH WORD OR URL">
-     <button id="go-button" class="button-with-icon">
-       >
-     </button>
-     <button id="add-bookmark-button" class="button-with-icon">
-       +
-     </button>
-     <button id="toggle-bookmark-button" class="button-with-icon">
-       ★
-     </button>
-     <button id="close-button" class="button-with-icon">
-       X
-     </button>
+     <button id="go-button" class="button-with-icon">></button>
+     <button id="add-bookmark-button" class="button-with-icon">+</button>
+     <button id="toggle-bookmark-button" class="button-with-icon">★</button>
+     <button id="close-button" class="button-with-icon">X</button>
    </div>
    <ul class="bookmark-list" style="display: none;"></ul>
    <iframe id="mini-iframe"></iframe>
@@ -85,10 +78,10 @@ function init() {
     // 검색어가 없다면 defaultURL로 이동한다
     if (!urlInput.value) {
       targetUrl = defaultURL;
-      // 주소 검색 아니라면 나무위키 키워드 검색을 한다
+      // 주소 검색 아니라면 구글 검색을 한다
     } else if (!urlInput.value.includes(".")) {
       const queryParams = encodeURIComponent(urlInput.value);
-      targetUrl = `https://namu.wiki/w/${queryParams}`;
+      targetUrl = `https://www.google.com/search?q=${queryParams}`;
       // https:// 를 붙이지 않았더라도 정상적인 주소 이동을 하게 한다
     } else {
       targetUrl =
