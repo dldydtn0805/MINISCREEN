@@ -31,12 +31,15 @@ function init() {
     <button id="add-bookmark-button" class="button-with-icon">
       +
     </button>
+    <button id="toggle-bookmark-button" class="button-with-icon">
+      ★
+    </button>
     <button id="close-button" class="button-with-icon">
       X
     </button>
   </div>
+  <ul class="bookmark-list" style="display: none;"></ul>
   <iframe id="mini-iframe"></iframe>
-  <ul class="bookmark-list"></ul>
 `;
 
   // URL 입력 및 이동 기능을 JS로 가져온다
@@ -47,6 +50,9 @@ function init() {
   const header = miniScreen.querySelector(".mini-screen-header");
   const bookmarkList = miniScreen.querySelector(".bookmark-list");
   const addBookmarkButton = miniScreen.querySelector("#add-bookmark-button");
+  const toggleBookmarkButton = miniScreen.querySelector(
+    "#toggle-bookmark-button"
+  );
 
   addBookmarkButton.addEventListener("click", () => {
     const currentUrl = iframe.src;
@@ -79,10 +85,10 @@ function init() {
     // 검색어가 없다면 defaultURL로 이동한다
     if (!urlInput.value) {
       targetUrl = defaultURL;
-      // 주소 검색 아니라면 나무위키 키워드 검색을 한다
+      // 주소 검색 아니라면 사전 키워드 검색을 한다
     } else if (!urlInput.value.includes(".")) {
       const queryParams = encodeURIComponent(urlInput.value);
-      targetUrl = `https://namu.wiki/w/${queryParams}`;
+      targetUrl = `https://www.google.com/search?q=${queryParams}`;
       // https:// 를 붙이지 않았더라도 정상적인 주소 이동을 하게 한다
     } else {
       targetUrl =
@@ -126,6 +132,11 @@ function init() {
 
   // 북마크 추가
   function addBookmark(url) {
+    // 중복 체크
+    if ([...bookmarkList.children].some((item) => item.dataset.url === url)) {
+      return;
+    }
+
     const listItem = document.createElement("li");
     listItem.dataset.url = url;
     listItem.textContent = url;
@@ -152,6 +163,12 @@ function init() {
       saveBookmarks();
     }
   }
+
+  toggleBookmarkButton.addEventListener("click", () => {
+    const bookmarkListElement = miniScreen.querySelector(".bookmark-list");
+    bookmarkListElement.style.display =
+      bookmarkListElement.style.display === "none" ? "block" : "none";
+  });
 
   // 미니 스크린 생성 시 북마크 데이터 로드
   loadBookmarks();
