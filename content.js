@@ -1,10 +1,10 @@
 function init() {
-  // MINISCREEN이 꺼진 상태만 동작한다
+  // MINISCREEN이 이미 존재하면 초기화 하지 않음
   if (document.getElementById("miniscreen")) {
     return;
   }
 
-  // MINISCREEN을 위한 DIV를 생성한다
+  // MINISCREEN을 위한 DIV를 생성
   const miniScreen = document.createElement("div");
   miniScreen.id = "miniscreen";
   miniScreen.style.position = "fixed";
@@ -21,21 +21,20 @@ function init() {
   miniScreen.style.display = "flex";
   miniScreen.style.flexDirection = "column";
 
-  // 직접 HTML을 넣는다
+  // 미니 스크린의 HTML 내용 설정
   miniScreen.innerHTML = `
-   <div class="mini-screen-header">
-     
-     <input type="text" id="url-input" placeholder="SEARCH WORD OR URL">
-     <button id="go-button" class="button-with-icon">></button>
-     <button id="add-bookmark-button" class="button-with-icon">+</button>
-     <button id="toggle-bookmark-button" class="button-with-icon">★</button>
-     <button id="close-button" class="button-with-icon">X</button>
-   </div>
-   <ul class="bookmark-list" style="display: none;"></ul>
-   <iframe id="mini-iframe"></iframe>
- `;
+    <div class="mini-screen-header">
+      <input type="text" id="url-input" placeholder="SEARCH WORD OR URL">
+      <button id="go-button" class="button-with-icon">></button>
+      <button id="add-bookmark-button" class="button-with-icon">+</button>
+      <button id="toggle-bookmark-button" class="button-with-icon">★</button>
+      <button id="close-button" class="button-with-icon">X</button>
+    </div>
+    <ul class="bookmark-list" style="display: none;"></ul>
+    <iframe id="mini-iframe" sandbox="allow-same-origin allow-scripts"></iframe>
+  `;
 
-  // URL 입력 및 이동 기능을 JS로 가져온다
+  // DOM 요소들 가져오기
   const urlInput = miniScreen.querySelector("#url-input");
   const goButton = miniScreen.querySelector("#go-button");
   const closeButton = miniScreen.querySelector("#close-button");
@@ -47,12 +46,13 @@ function init() {
     "#toggle-bookmark-button"
   );
 
+  // 북마크 추가 버튼 클릭 시 현재 URL을 북마크로 추가
   addBookmarkButton.addEventListener("click", () => {
     const currentUrl = iframe.src;
     addBookmark(currentUrl);
   });
 
-  // 미니 스크린 헤더를 드래그해서 이동할 수 있다
+  // 미니 스크린 헤더를 드래그해서 이동할 수 있도록 설정
   header.addEventListener("mousedown", (event) => {
     const offsetX = event.clientX - miniScreen.getBoundingClientRect().left;
     const offsetY = event.clientY - miniScreen.getBoundingClientRect().top;
@@ -68,21 +68,18 @@ function init() {
     document.addEventListener("mouseup", onMouseUp);
   });
 
-  // 기본 URL을 설정한다
+  // 기본 URL 설정
   const defaultURL = "https://youtube.com";
   iframe.src = defaultURL;
 
-  // GO 버튼은 페이지를 이동시킨다
+  // GO 버튼 클릭 시 페이지를 이동
   let targetUrl;
   goButton.addEventListener("click", () => {
-    // 검색어가 없다면 defaultURL로 이동한다
     if (!urlInput.value) {
       targetUrl = defaultURL;
-      // 주소 검색 아니라면 구글 검색을 한다
     } else if (!urlInput.value.includes(".")) {
       const queryParams = encodeURIComponent(urlInput.value);
       targetUrl = `https://www.google.com/search?q=${queryParams}`;
-      // https:// 를 붙이지 않았더라도 정상적인 주소 이동을 하게 한다
     } else {
       targetUrl =
         urlInput.value.startsWith("http://") ||
@@ -90,12 +87,11 @@ function init() {
           ? urlInput.value
           : "https://" + urlInput.value;
     }
-    // 입력창을 다시 비운다
     urlInput.value = "";
     iframe.src = targetUrl;
   });
 
-  // ENTER를 해도 페이지를 이동한다
+  // ENTER 키를 눌러도 페이지 이동
   urlInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -103,28 +99,37 @@ function init() {
     }
   });
 
-  // CLOSE 버튼은 MINISCREEN을 종료시킨다
+  // CLOSE 버튼 클릭 시 MINISCREEN 종료
   closeButton.addEventListener("click", () => {
     miniScreen.remove();
   });
 
-  // 북마크 데이터 저장
+  // 북마크를 chrome.storage.sync에 저장
   function saveBookmarks() {
     const bookmarks = [...bookmarkList.children].map((item) => {
       const url = item.dataset.url;
       return url;
     });
-    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+    chrome.storage.sync.set({ bookmarks: bookmarks }, () => {
+      console.log("Bookmarks saved to sync storage");
+    });
   }
 
-  // 북마크 데이터 로드
+  // chrome.storage.sync에서 북마크를 로드
   function loadBookmarks() {
-    const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
-    bookmarks.forEach((url) => addBookmark(url));
+    chrome.storage.sync.get(["bookmarks"], (result) => {
+      const bookmarks = result.bookmarks || [];
+      bookmarks.forEach((url) => addBookmark(url));
+    });
   }
 
   // 북마크 추가
   function addBookmark(url) {
+    // 중복된 URL은 추가하지 않음
+    if ([...bookmarkList.children].some((item) => item.dataset.url === url)) {
+      return;
+    }
+
     const listItem = document.createElement("li");
     listItem.dataset.url = url;
     listItem.textContent = url;
@@ -152,6 +157,7 @@ function init() {
     }
   }
 
+  // 북마크 목록을 표시하거나 숨김
   toggleBookmarkButton.addEventListener("click", () => {
     const bookmarkListElement = miniScreen.querySelector(".bookmark-list");
     bookmarkListElement.style.display =
