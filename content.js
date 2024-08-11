@@ -76,7 +76,11 @@ function init() {
   // GO 버튼 클릭 시 페이지를 이동
   let targetUrl;
   let submitItem;
+
   goButton.addEventListener("click", () => {
+    // 현재 입력값을 가져옵니다.
+    submitItem = urlInput.value.trim();
+
     if (!submitItem) {
       targetUrl = defaultURL;
     } else if (!submitItem.includes(".")) {
@@ -84,8 +88,7 @@ function init() {
       targetUrl = `https://www.google.com/search?q=${queryParams}`;
     } else {
       targetUrl =
-        submitItem.startsWith("http://") ||
-        submitItem.startsWith("https://")
+        submitItem.startsWith("http://") || submitItem.startsWith("https://")
           ? submitItem
           : "https://" + submitItem;
     }
@@ -98,8 +101,6 @@ function init() {
     if (event.key === "Enter") {
       event.preventDefault();
       goButton.click();
-    } else {
-      submitItem = event.target.value
     }
   });
 
