@@ -34,6 +34,8 @@ function init() {
     "#toggle-bookmark-button"
   );
 
+  
+
   // 뒤로가기 버튼 추가
   backButton.addEventListener("click", () => {
     window.history.back();
