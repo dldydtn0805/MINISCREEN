@@ -25,6 +25,7 @@ function init() {
   miniScreen.innerHTML = `
     <div class="mini-screen-header">
       <input type="text" id="url-input" placeholder="SEARCH WORD OR URL">
+      <button id="back-button" class="button-with-icon"><</button>
       <button id="go-button" class="button-with-icon">></button>
       <button id="add-bookmark-button" class="button-with-icon">+</button>
       <button id="toggle-bookmark-button" class="button-with-icon">★</button>
@@ -36,6 +37,7 @@ function init() {
 
   // DOM 요소들 가져오기
   const urlInput = miniScreen.querySelector("#url-input");
+  const backButton = miniScreen.querySelector("#back-button");
   const goButton = miniScreen.querySelector("#go-button");
   const closeButton = miniScreen.querySelector("#close-button");
   const iframe = miniScreen.querySelector("#mini-iframe");
@@ -45,6 +47,11 @@ function init() {
   const toggleBookmarkButton = miniScreen.querySelector(
     "#toggle-bookmark-button"
   );
+
+  // 뒤로가기 버튼 추가
+  backButton.addEventListener("click", () => {
+    window.history.back();
+  });
 
   // 북마크 추가 버튼 클릭 시 현재 URL을 북마크로 추가
   addBookmarkButton.addEventListener("click", () => {
