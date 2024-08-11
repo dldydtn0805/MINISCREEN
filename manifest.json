@@ -3,13 +3,7 @@
   "name": "MINISCREEN",
   "version": "1.0",
   "description": "크롬 화면 위에 보조 모바일 화면을 띄울 수 있다",
-  "permissions": [
-    "activeTab",
-    "scripting",
-    "storage",
-    "tabs",
-    "declarativeNetRequest"
-  ],
+  "permissions": ["scripting", "storage", "declarativeNetRequest"],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
