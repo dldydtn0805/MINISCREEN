@@ -31,7 +31,6 @@ function init() {
       <button id="close-button" class="button-with-icon">X</button>
     </div>
     <ul class="bookmark-list" style="display: none;"></ul>
-    <div id='debug'></div>
     <iframe id="mini-iframe" sandbox="allow-same-origin allow-scripts"></iframe>
   `;
 
@@ -75,30 +74,38 @@ function init() {
 
   // GO 버튼 클릭 시 페이지를 이동
   let targetUrl;
-  let submitItem;
+  let isComposing = false;
 
   goButton.addEventListener("click", () => {
-    // 현재 입력값을 가져옵니다.
-    submitItem = urlInput.value.trim();
-
-    if (!submitItem) {
+    if (!urlInput.value) {
       targetUrl = defaultURL;
-    } else if (!submitItem.includes(".")) {
-      const queryParams = encodeURIComponent(submitItem);
+    } else if (!urlInput.value.includes(".")) {
+      const queryParams = encodeURIComponent(urlInput.value);
       targetUrl = `https://www.google.com/search?q=${queryParams}`;
     } else {
       targetUrl =
-        submitItem.startsWith("http://") || submitItem.startsWith("https://")
-          ? submitItem
-          : "https://" + submitItem;
+        urlInput.value.startsWith("http://") ||
+        urlInput.value.startsWith("https://")
+          ? urlInput.value
+          : "https://" + urlInput.value;
     }
     urlInput.value = "";
     iframe.src = targetUrl;
   });
 
+  // 입력 시작 시 isComposing을 true로 설정
+  urlInput.addEventListener("compositionstart", () => {
+    isComposing = true;
+  });
+
+  // 입력 종료 시 isComposing을 false로 설정
+  urlInput.addEventListener("compositionend", () => {
+    isComposing = false;
+  });
+
   // ENTER 키를 눌러도 페이지 이동
   urlInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && !isComposing) {
       event.preventDefault();
       goButton.click();
     }
