@@ -31,6 +31,7 @@ function init() {
       <button id="close-button" class="button-with-icon">X</button>
     </div>
     <ul class="bookmark-list" style="display: none;"></ul>
+    <div id='debug'></div>
     <iframe id="mini-iframe" sandbox="allow-same-origin allow-scripts"></iframe>
   `;
 
@@ -74,18 +75,19 @@ function init() {
 
   // GO 버튼 클릭 시 페이지를 이동
   let targetUrl;
+  let submitItem;
   goButton.addEventListener("click", () => {
-    if (!urlInput.value) {
+    if (!submitItem) {
       targetUrl = defaultURL;
-    } else if (!urlInput.value.includes(".")) {
-      const queryParams = encodeURIComponent(urlInput.value);
+    } else if (!submitItem.includes(".")) {
+      const queryParams = encodeURIComponent(submitItem);
       targetUrl = `https://www.google.com/search?q=${queryParams}`;
     } else {
       targetUrl =
-        urlInput.value.startsWith("http://") ||
-        urlInput.value.startsWith("https://")
-          ? urlInput.value
-          : "https://" + urlInput.value;
+        submitItem.startsWith("http://") ||
+        submitItem.startsWith("https://")
+          ? submitItem
+          : "https://" + submitItem;
     }
     urlInput.value = "";
     iframe.src = targetUrl;
@@ -96,6 +98,8 @@ function init() {
     if (event.key === "Enter") {
       event.preventDefault();
       goButton.click();
+    } else {
+      submitItem = event.target.value
     }
   });
 
