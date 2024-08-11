@@ -1,3 +1,19 @@
+#miniscreen {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 25%;
+  height: 80%;
+  background-color: white;
+  border: 1px solid black;
+  z-index: 9999;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
 .mini-screen-header {
   display: flex;
   align-items: center;

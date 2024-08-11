@@ -7,20 +7,6 @@ function init() {
   // MINISCREEN을 위한 DIV를 생성
   const miniScreen = document.createElement("div");
   miniScreen.id = "miniscreen";
-  miniScreen.style.position = "fixed";
-  miniScreen.style.bottom = "10px";
-  miniScreen.style.right = "10px";
-  miniScreen.style.width = "25%";
-  miniScreen.style.height = "80%";
-  miniScreen.style.backgroundColor = "white";
-  miniScreen.style.border = "1px solid black";
-  miniScreen.style.zIndex = "9999";
-  miniScreen.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.1)";
-  miniScreen.style.borderRadius = "8px";
-  miniScreen.style.overflow = "hidden";
-  miniScreen.style.display = "flex";
-  miniScreen.style.flexDirection = "column";
-
   // 미니 스크린의 HTML 내용 설정
   miniScreen.innerHTML = `
     <div class="mini-screen-header">
