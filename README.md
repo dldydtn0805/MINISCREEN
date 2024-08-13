@@ -19,7 +19,12 @@
 - IFRAME을 사용해서 보조 화면으로 웹을 불러오기 때문에 X-FRAME-OPTIONS은 해제됩니다.
 - 모바일 USER AGENT로 설정되어 있습니다.
 
-## 설치방법
+## 공식 버전
+
+- https://chromewebstore.google.com/detail/hkbkhopmbecilgmfacgbihohlfhhbpin 사이트로 이동합니다.
+- 확장프로그램 추가 버튼을 클릭합니다.
+
+## ZIP 파일 설치 방법
 
 - 주소 창에 `chrome://extensions/` 로 이동합니다 
 - 우상단 `개발자 모드` 를 켭니다
