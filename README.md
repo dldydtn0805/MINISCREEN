@@ -23,6 +23,7 @@ MINISCREEN은 크롬 브라우저에서 작은 보조 화면을 제공하는 확
 
 - IFRAME 사용으로 X-FRAME-OPTIONS 해제
 - 모바일 USER AGENT 설정
+- 일부 사이트 제공 안됨
 
 ## 설치 방법
 
