@@ -38,3 +38,39 @@ MINISCREEN은 크롬 브라우저에서 작은 보조 화면을 제공하는 확
 2. 우상단 '개발자 모드' 켜기
 3. 좌상단 '압축 해제된 확장프로그램을 로드합니다' 클릭
 4. 폴더 선택
+
+--- 
+
+# 🖥️ MINISCREEN
+MINISCREEN is a Chrome browser extension that provides a small auxiliary screen.
+![MINISCREEN](https://github.com/user-attachments/assets/6e0c2a92-7965-4f99-b9cf-b7c05f9f8a8f)
+
+
+## Key Features
+- Open an auxiliary screen on top of the Chrome window
+- Search bar usage:
+  - 🔍 Enter a search term and click the ➡️ button or press Enter for a Google search
+  - 🌐 Enter a URL and click the ➡️ button or press Enter to navigate to the address
+- Convenient navigation:
+  - ⬅️ Go back
+  - ➕ Add bookmark
+  - ⭐ Toggle bookmark list
+  - ❌ Close window
+- 🖱️ Drag the window header to move the screen
+- 📱 Mobile-friendly UI
+
+## ⚠️ Cautions
+- Disable X-FRAME-OPTIONS using IFRAME
+- Set mobile USER AGENT
+- Some sites may not be supported
+
+## Installation
+### Official Version
+1. Go to the [Chrome Web Store](https://chromewebstore.google.com/detail/hkbkhopmbecilgmfacgbihohlfhhbpin)
+2. Click the "Add to Chrome" button
+
+### ZIP File Installation
+1. Type `chrome://extensions/` in the address bar
+2. Turn on "Developer mode" in the top right corner
+3. Click "Load unpacked" in the top left corner
+4. Select the folder
